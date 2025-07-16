@@ -5,9 +5,10 @@ import { useDropzone } from 'react-dropzone';
 
 interface FileUploadProps {
   onFileUpload: (file: File) => void;
+  assistantId?: string;
 }
 
-export function FileUpload({ onFileUpload }: FileUploadProps) {
+export function FileUpload({ onFileUpload, assistantId }: FileUploadProps) {
   const onDrop = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles.length > 0) {
       const file = acceptedFiles[0];

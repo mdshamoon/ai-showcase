@@ -6,8 +6,6 @@ const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
 });
 
-const ASSISTANT_ID = process.env.OPENAI_ASSISTANT_ID;
-
 // Hardcoded prompt for Excel correction
 const CORRECTION_PROMPT = `
 Please analyze the uploaded Excel file.
@@ -15,19 +13,27 @@ Please analyze the uploaded Excel file.
 
 export async function POST(request: NextRequest) {
   try {
-    if (!process.env.OPENAI_API_KEY || !process.env.OPENAI_ASSISTANT_ID) {
+    if (!process.env.OPENAI_API_KEY) {
       return NextResponse.json(
-        { error: 'OpenAI API key or Assistant ID not configured' },
+        { error: 'OpenAI API key not configured' },
         { status: 500 }
       );
     }
 
     const formData = await request.formData();
     const file = formData.get('file') as File;
+    const assistantId = formData.get('assistantId') as string;
 
     if (!file) {
       return NextResponse.json(
         { error: 'No file uploaded' },
+        { status: 400 }
+      );
+    }
+
+    if (!assistantId) {
+      return NextResponse.json(
+        { error: 'Assistant ID is required' },
         { status: 400 }
       );
     }
@@ -89,7 +95,7 @@ export async function POST(request: NextRequest) {
     console.log('Running assistant...');
     // Run the assistant  
     const run = await openai.beta.threads.runs.create(thread.id, {
-      assistant_id: ASSISTANT_ID!,
+      assistant_id: assistantId,
     });
     
     console.log('Created run with ID:', run.id);
