@@ -6,9 +6,9 @@ import { usePathname } from 'next/navigation';
 export function Navigation() {
   const pathname = usePathname();
   const tabs = [
-    { name: 'Excel', path: '/' },
-    { name: 'Assistant', path: '/assistant' },
-    { name: 'SQL', path: '/sql' }
+    { name: 'Chat with Your Excel', path: '/' },
+    { name: 'Create Excel Assistant', path: '/assistant' },
+    { name: 'Generate SQL from Text', path: '/sql' }
   ];
 
   return (

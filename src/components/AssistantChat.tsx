@@ -50,10 +50,10 @@ export function AssistantChat({ onAssistantCreated }: AssistantChatProps) {
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Create Your AI Assistant
+            Create Excel Assistant
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Describe what you want your assistant to do with Excel files. Be specific about the tasks and corrections you need.
+            Create a specialized AI assistant to analyze and process your Excel files. Be specific about what you want it to do.
           </p>
         </div>
 

@@ -152,10 +152,10 @@ export function SqlChat({
       <div className="max-w-4xl mx-auto">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Create Your SQL Assistant
+            Generate SQL from Text
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            Paste your database schema below and the assistant will help you generate SQL queries.
+            Convert your plain English questions into SQL queries. Just paste your database schema below to get started.
           </p>
         </div>
 

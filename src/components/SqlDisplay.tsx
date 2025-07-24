@@ -15,12 +15,12 @@ export function SqlDisplay({ assistant, onReset }: SqlDisplayProps) {
   return (
     <div className="bg-white rounded-xl shadow-lg p-8 h-full">
       <div className="flex justify-between items-start mb-6">
-        <h2 className="text-2xl font-bold text-gray-900">Your SQL Assistant</h2>
+        <h2 className="text-2xl font-bold text-gray-900">Your Database Configuration</h2>
         <button
           onClick={onReset}
           className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
         >
-          Create New Assistant
+          Configure New Database
         </button>
       </div>
 
