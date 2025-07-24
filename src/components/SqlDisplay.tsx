@@ -13,7 +13,7 @@ interface SqlDisplayProps {
 
 export function SqlDisplay({ assistant, onReset }: SqlDisplayProps) {
   return (
-    <div className="bg-white rounded-xl shadow-lg p-8 h-full">
+    <div className="bg-white rounded-xl shadow-lg p-8 h-full min-w-[400px] min-h-[600px]">
       <div className="flex justify-between items-start mb-6">
         <h2 className="text-2xl font-semibold text-gray-900">Your Database Configuration</h2>
         <button

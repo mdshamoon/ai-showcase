@@ -82,12 +82,12 @@ export default function AssistantPage() {
         <div className="w-full max-w-7xl">
           {!assistant ? (
             // Show full screen assistant creation when no assistant exists
-            <div className="bg-white rounded-xl shadow-lg p-8">
+            <div className="bg-white rounded-xl shadow-lg p-8 min-w-[800px] min-h-[600px]">
               <AssistantChat onAssistantCreated={handleAssistantCreated} />
             </div>
           ) : (
             // Show side-by-side layout when assistant exists - wider layout with equal heights
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 min-h-[600px]">
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 min-h-[700px]">
               <div className="flex">
                 <AssistantDisplay 
                   assistant={assistant}
@@ -100,7 +100,7 @@ export default function AssistantPage() {
               </div>
               <div className="flex flex-col space-y-8">
                 {!isProcessing && !result && (
-                  <div className="bg-white rounded-xl shadow-lg p-8 flex-1">
+                  <div className="bg-white rounded-xl shadow-lg p-8 flex-1 min-w-[400px] min-h-[600px]">
                     <div className="mb-6">
                       <h3 className="text-2xl font-semibold text-gray-900 mb-2">Upload Excel File</h3>
                       <p className="text-gray-600">Upload your Excel file to process it with your custom assistant</p>
@@ -111,14 +111,14 @@ export default function AssistantPage() {
 
                 {/* Processing Status */}
                 {isProcessing && (
-                  <div className="bg-white rounded-xl shadow-lg p-8 flex-1">
+                  <div className="bg-white rounded-xl shadow-lg p-8 flex-1 min-w-[400px] min-h-[500px]">
                     <ProcessingStatus />
                   </div>
                 )}
 
                 {/* Results */}
                 {result && (
-                  <div className="bg-white rounded-xl shadow-lg p-8 flex-1">
+                  <div className="bg-white rounded-xl shadow-lg p-8 flex-1 min-w-[400px] min-h-[500px]">
                     <DownloadResult result={result} onReset={handleReset} />
                   </div>
                 )}

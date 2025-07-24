@@ -16,7 +16,7 @@ interface AssistantDisplayProps {
 
 export function AssistantDisplay({ assistantId, prompt, onReset }: AssistantDisplayProps) {
   return (
-    <div className="bg-white rounded-xl shadow-lg p-8 w-full h-full flex flex-col">
+    <div className="bg-white rounded-xl shadow-lg p-8 w-full h-full flex flex-col min-w-[400px] min-h-[600px]">
       <div className="flex justify-between items-start mb-8">
         <div>
           <h2 className="text-3xl font-semibold text-gray-900 mb-2">Your AI Assistant</h2>

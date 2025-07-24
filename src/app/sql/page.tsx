@@ -71,16 +71,16 @@ export default function SqlPage() {
       <div className="flex justify-center px-4">
         <div className="w-full max-w-5xl">
           {!assistant ? (
-            <div className="bg-white rounded-xl shadow-lg p-8">
+            <div className="bg-white rounded-xl shadow-lg p-8 min-w-[800px] min-h-[600px]">
               <SqlChat onAssistantCreated={handleAssistantCreated} />
             </div>
           ) : (
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 min-h-[700px]">
               <SqlDisplay 
                 assistant={assistant}
                 onReset={handleResetAssistant}
               />
-              <div className="bg-white rounded-xl shadow-lg p-8">
+              <div className="bg-white rounded-xl shadow-lg p-8 min-w-[400px] min-h-[600px]">
                 <h2 className="text-3xl font-semibold text-gray-900 mb-6">Ask Your Question</h2>
                 <SqlChat 
                   onAssistantCreated={handleAssistantCreated}

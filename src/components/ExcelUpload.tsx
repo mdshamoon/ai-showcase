@@ -27,7 +27,7 @@ export function ExcelUpload({ onFileUpload, showHeader = true }: FileUploadProps
   });
 
   return (
-    <div className="w-full">
+    <div className="w-full min-w-[400px] min-h-[600px]">
       {showHeader && (
         <div className="mb-8">
           <div className="text-center">

@@ -80,7 +80,7 @@ export default function Home() {
     return (
       <div className="flex justify-center">
         <div className="w-full max-w-4xl">
-          <div className="bg-white rounded-xl shadow-lg p-8">
+          <div className="bg-white rounded-xl shadow-lg p-8 min-w-[800px] min-h-[500px]">
             <div className="text-center py-12">
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mx-auto mb-4"></div>
               <p className="text-gray-600">Initializing AI Assistant...</p>
@@ -97,21 +97,21 @@ export default function Home() {
       <div className="flex justify-center">
         <div className="w-full max-w-4xl">
           {!isProcessing && !result && (
-            <div className="bg-white rounded-xl shadow-lg p-8">
+            <div className="bg-white rounded-xl shadow-lg p-8 min-w-[800px] min-h-[600px]">
               <ExcelUpload onFileUpload={handleFileUpload} />
             </div>
           )}
 
           {/* Processing Status */}
           {isProcessing && (
-            <div className="bg-white rounded-xl shadow-lg p-8">
+            <div className="bg-white rounded-xl shadow-lg p-8 min-w-[800px] min-h-[500px]">
               <ProcessingStatus />
             </div>
           )}
 
           {/* Results */}
           {result && (
-            <div className="bg-white rounded-xl shadow-lg p-8">
+            <div className="bg-white rounded-xl shadow-lg p-8 min-w-[800px] min-h-[500px]">
               <DownloadResult result={result} onReset={handleReset} />
             </div>
           )}

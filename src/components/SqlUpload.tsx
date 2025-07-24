@@ -27,7 +27,7 @@ export function SqlUpload({ onFileUpload, assistantId }: FileUploadProps) {
   });
 
   return (
-    <div className="w-full">
+    <div className="w-full min-w-[400px] min-h-[600px]">
       <div className="text-center mb-6">
         <h3 className="text-2xl font-bold text-gray-900 mb-2">Upload SQL File</h3>
         <p className="text-gray-600">Process your SQL files with AI assistance</p>
