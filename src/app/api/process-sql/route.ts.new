@@ -1,0 +1,85 @@
+import { NextRequest, NextResponse } from 'next/server';
+import OpenAI from 'openai';
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
+
+export async function POST(request: NextRequest) {
+  try {
+    if (!process.env.OPENAI_API_KEY) {
+      return NextResponse.json(
+        { error: 'OpenAI API key not configured' },
+        { status: 500 }
+      );
+    }
+
+    const body = await request.json();
+    const { assistantId, query, schema } = body;
+
+    if (!assistantId || !query || !schema) {
+      return NextResponse.json(
+        { error: 'Missing required parameters' },
+        { status: 400 }
+      );
+    }
+
+    // Create a thread
+    const thread = await openai.beta.threads.create();
+
+    // Add the schema and query to the thread
+    await openai.beta.threads.messages.create(thread.id, {
+      role: 'user',
+      content: `Schema:\n${schema}\n\nQuery Request: ${query}`,
+    });
+
+    // Run the assistant
+    const run = await openai.beta.threads.runs.create(thread.id, {
+      assistant_id: assistantId,
+    });
+
+    // Wait for completion
+    let runStatus = await openai.beta.threads.runs.retrieve(
+      thread.id,
+      run.id
+    );
+    
+    while (runStatus.status === 'queued' || runStatus.status === 'in_progress') {
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      runStatus = await openai.beta.threads.runs.retrieve(
+        thread.id,
+        run.id
+      );
+    }
+
+    if (runStatus.status === 'completed') {
+      // Get the messages
+      const messages = await openai.beta.threads.messages.list(thread.id);
+      
+      // Get the last assistant message
+      const lastMessage = messages.data
+        .filter(message => message.role === 'assistant')
+        .pop();
+
+      if (!lastMessage || !lastMessage.content.length) {
+        throw new Error('No response from assistant');
+      }
+
+      const content = lastMessage.content[0];
+      
+      if (content.type !== 'text') {
+        throw new Error('Unexpected response format from assistant');
+      }
+
+      return NextResponse.json({ query: content.text.value });
+    } else {
+      throw new Error(`Run failed with status: ${runStatus.status}`);
+    }
+  } catch (error) {
+    console.error('Error processing SQL query:', error);
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : 'An unexpected error occurred' },
+      { status: 500 }
+    );
+  }
+}
