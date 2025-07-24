@@ -1,92 +1,101 @@
 'use client';
 
 import { useState } from 'react';
-import { SqlUpload } from '@/components/SqlUpload';
-import { ProcessingStatus } from '@/components/ProcessingStatus';
-import { DownloadResult } from '@/components/DownloadResult';
-
-interface ProcessingResult {
-  success: boolean;
-  message: string;
-  downloadUrl?: string;
-  fileName?: string;
-}
+import { SqlChat } from '@/components/SqlChat';
+import { SqlDisplay } from '@/components/SqlDisplay';
 
 interface Assistant {
   id: string;
   prompt: string;
+  schema: string;
+}
+
+interface SqlResult {
+  query: string;
+  explanation: string;
 }
 
 export default function SqlPage() {
   const [assistant, setAssistant] = useState<Assistant | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
-  const [result, setResult] = useState<ProcessingResult | null>(null);
+  const [sqlResult, setSqlResult] = useState<SqlResult | null>(null);
 
-  const handleFileUpload = async (file: File) => {
+  const handleAssistantCreated = (assistantId: string, prompt: string, schema: string) => {
+    setAssistant({ id: assistantId, prompt, schema });
+  };
+
+  const handleResetAssistant = () => {
+    setAssistant(null);
+    setSqlResult(null);
+  };
+
+  const handleQuerySubmission = async (query: string) => {
     if (!assistant) return;
 
     setIsProcessing(true);
-    setResult(null);
+    setSqlResult(null);
 
     try {
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('assistantId', assistant.id);
-
       const response = await fetch('/api/process-sql', {
         method: 'POST',
-        body: formData,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          assistantId: assistant.id,
+          query,
+          schema: assistant.schema
+        }),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to process file');
+        throw new Error(data.error || 'Failed to process query');
       }
 
-      setResult({
-        success: true,
-        message: 'File processed successfully!',
-        downloadUrl: data.downloadUrl,
-        fileName: data.fileName,
+      setSqlResult({
+        query: data.query,
+        explanation: data.explanation
       });
     } catch (error) {
-      setResult({
-        success: false,
-        message: error instanceof Error ? error.message : 'An unexpected error occurred',
-      });
+      console.error(error);
     } finally {
       setIsProcessing(false);
     }
   };
 
-  const handleReset = () => {
-    setResult(null);
-  };
-
   return (
     <>
-      {/* SQL Upload Content */}
+      {/* SQL Assistant Content */}
       <div className="flex justify-center">
-        <div className="w-full max-w-4xl">
-          <div className="bg-white rounded-xl shadow-lg p-8">
-            <SqlUpload onFileUpload={handleFileUpload} assistantId={assistant?.id || null} />
-          </div>
+        <div className="w-full max-w-6xl">
+          {!assistant ? (
+            // Show full screen assistant creation when no assistant exists
+            <div className="bg-white rounded-xl shadow-lg p-8">
+              <SqlChat onAssistantCreated={handleAssistantCreated} />
+            </div>
+          ) : (
+            // Show side-by-side layout when assistant exists
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <SqlDisplay 
+                assistant={assistant}
+                onReset={handleResetAssistant}
+              />
+              <div className="bg-white rounded-xl shadow-lg p-8">
+                <h2 className="text-2xl font-bold text-gray-900 mb-6">Ask Your Question</h2>
+                <SqlChat 
+                  onAssistantCreated={handleAssistantCreated}
+                  existingAssistant={assistant}
+                  onQuerySubmit={handleQuerySubmission}
+                  sqlResult={sqlResult}
+                  isProcessing={isProcessing}
+                />
+              </div>
+            </div>
+          )}
         </div>
       </div>
-
-      {/* Processing Status and Results */}
-      {isProcessing && (
-        <div className="mt-8 flex justify-center">
-          <ProcessingStatus />
-        </div>
-      )}
-
-      {result && (
-        <div className="mt-8 flex justify-center">
-          <DownloadResult result={result} onReset={handleReset} />
-        </div>
-      )}
     </>
   );
-} 
+}

@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { prompt } = await request.json();
+    const { prompt, schema } = await request.json();
 
     if (!prompt || prompt.trim() === '') {
       return NextResponse.json(
@@ -25,9 +25,9 @@ export async function POST(request: NextRequest) {
 
     // Create a new assistant with the provided prompt
     const assistant = await openai.beta.assistants.create({
-      name: "Excel File Processor",
-      instructions: prompt,
-      model: "gpt-4o",
+      name: schema ? "SQL Query Generator" : "Excel File Processor",
+      instructions: schema ? `${prompt}\n\nSchema:\n${schema}` : prompt,
+      model: "gpt-4-1106-preview",
       tools: [{ type: "code_interpreter" }],
     });
 
