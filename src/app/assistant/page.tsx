@@ -57,7 +57,7 @@ export default function AssistantPage() {
 
       setResult({
         success: true,
-        message: 'File processed successfully!',
+        message: 'File processed successfully! Your Excel file has been analyzed and enhanced by your custom assistant.',
         downloadUrl: data.downloadUrl,
         fileName: data.fileName,
       });
@@ -78,49 +78,57 @@ export default function AssistantPage() {
   return (
     <>
       {/* Assistant Content */}
-      <div className="flex justify-center">
-        <div className="w-full max-w-4xl">
+      <div className="flex justify-center px-4">
+        <div className="w-full max-w-7xl">
           {!assistant ? (
             // Show full screen assistant creation when no assistant exists
             <div className="bg-white rounded-xl shadow-lg p-8">
-              {/* <div className="text-center mb-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">Create Your AI Assistant</h2>
-                <p className="text-lg text-gray-600">Create an assistant to process your files</p>
-              </div> */}
               <AssistantChat onAssistantCreated={handleAssistantCreated} />
             </div>
           ) : (
-            // Show side-by-side layout when assistant exists
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-              <AssistantDisplay 
-                assistant={assistant}
-                assistantId={assistant?.id || null} 
-                prompt={assistant?.prompt || null} 
-                onReset={handleResetAssistant}
-                handleAssistantCreated={handleAssistantCreated}
-                handleFileUpload={handleFileUpload}
-              />
-              <div className="bg-white rounded-xl shadow-lg p-8">
-                <h3 className="text-xl font-semibold text-gray-900 mb-6">Upload Excel File</h3>
-                <ExcelUpload onFileUpload={handleFileUpload} assistantId={assistant?.id || null} />
+            // Show side-by-side layout when assistant exists - wider layout with equal heights
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-8 min-h-[600px]">
+              <div className="flex">
+                <AssistantDisplay 
+                  assistant={assistant}
+                  assistantId={assistant?.id || null} 
+                  prompt={assistant?.prompt || null} 
+                  onReset={handleResetAssistant}
+                  handleAssistantCreated={handleAssistantCreated}
+                  handleFileUpload={handleFileUpload}
+                />
+              </div>
+              <div className="flex flex-col space-y-8">
+                {!isProcessing && !result && (
+                  <div className="bg-white rounded-xl shadow-lg p-8 flex-1">
+                    <div className="mb-6">
+                      <h3 className="text-2xl font-semibold text-gray-900 mb-2">Upload Excel File</h3>
+                      <p className="text-gray-600">Upload your Excel file to process it with your custom assistant</p>
+                    </div>
+                    <ExcelUpload onFileUpload={handleFileUpload} showHeader={false} />
+                  </div>
+                )}
+
+                {/* Processing Status */}
+                {isProcessing && (
+                  <div className="bg-white rounded-xl shadow-lg p-8 flex-1">
+                    <ProcessingStatus />
+                  </div>
+                )}
+
+                {/* Results */}
+                {result && (
+                  <div className="bg-white rounded-xl shadow-lg p-8 flex-1">
+                    <DownloadResult result={result} onReset={handleReset} />
+                  </div>
+                )}
               </div>
             </div>
           )}
         </div>
       </div>
 
-      {/* Processing Status and Results */}
-      {isProcessing && (
-        <div className="mt-8 flex justify-center">
-          <ProcessingStatus />
-        </div>
-      )}
-
-      {result && (
-        <div className="mt-8 flex justify-center">
-          <DownloadResult result={result} onReset={handleReset} />
-        </div>
-      )}
+      {/* Processing Status and Results - now handled inline above */}
     </>
   );
 } 

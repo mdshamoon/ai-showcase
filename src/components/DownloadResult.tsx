@@ -59,11 +59,16 @@ export function DownloadResult({ result, onReset }: DownloadResultProps) {
         
         <div className="space-y-2">
           <h3 className={`text-xl font-semibold ${result.success ? 'text-green-900' : 'text-red-900'}`}>
-            {result.success ? 'Processing Complete!' : 'Processing Failed'}
+            {result.success ? '🎉 Processing Complete!' : '❌ Processing Failed'}
           </h3>
           <p className={`${result.success ? 'text-green-700' : 'text-red-700'} max-w-md mx-auto`}>
             {result.message}
           </p>
+          {result.success && (
+            <p className="text-sm text-gray-600 mt-2">
+              Your Excel file has been successfully processed and enhanced by our AI assistant.
+            </p>
+          )}
         </div>
         
         <div className="space-y-4">

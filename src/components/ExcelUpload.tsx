@@ -5,10 +5,10 @@ import { useDropzone } from 'react-dropzone';
 
 interface FileUploadProps {
   onFileUpload: (file: File) => void;
-  assistantId?: string | null;
+  showHeader?: boolean;
 }
 
-export function ExcelUpload({ onFileUpload, assistantId }: FileUploadProps) {
+export function ExcelUpload({ onFileUpload, showHeader = true }: FileUploadProps) {
   const onDrop = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles.length > 0) {
       const file = acceptedFiles[0];
@@ -28,14 +28,38 @@ export function ExcelUpload({ onFileUpload, assistantId }: FileUploadProps) {
 
   return (
     <div className="w-full">
-      <div className="mb-8">
-        <div className="text-center">
-          <h1 className="text-3xl font-semibold text-gray-900 mb-4">Chat with Your Excel</h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Drop your Excel file here to start chatting with AI about your data
-          </p>
+      {showHeader && (
+        <div className="mb-8">
+          <div className="text-center">
+            <h1 className="text-3xl font-semibold text-gray-900 mb-4">Chat with Your Excel</h1>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto mb-6">
+              Upload your Excel file and let our AI assistant analyze, correct, and enhance your data automatically
+            </p>
+            <div className="flex justify-center space-x-6 text-sm text-gray-500 mb-8">
+              <div className="flex items-center space-x-2">
+                <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+                <span>Data Analysis</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+                <span>Error Correction</span>
+              </div>
+              <div className="flex items-center space-x-2">
+                <svg className="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+                <span>Data Enhancement</span>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>      <div
+      )}
+      
+      <div
         {...getRootProps()}
         className={`border-2 border-dashed rounded-xl p-12 text-center cursor-pointer transition-all duration-200 hover:shadow-lg
           ${isDragActive 

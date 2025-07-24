@@ -194,7 +194,7 @@ export async function POST(request: NextRequest) {
 
     // Look for file attachments in the assistant's response
     let correctedFileId: string | null = null;
-    let correctedFileName = `corrected_${file.name}`;
+    const correctedFileName = `corrected_${file.name}`;
 
     for (const content of assistantMessage.content) {
       if (content.type === 'text' && content.text.annotations) {
