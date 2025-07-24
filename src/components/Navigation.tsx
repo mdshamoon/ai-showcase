@@ -12,15 +12,15 @@ export function Navigation() {
   ];
 
   return (
-    <div className="flex space-x-1">
+    <div className="flex space-x-2">
       {tabs.map((tab) => (
         <Link
           key={tab.path}
           href={tab.path}
-          className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 ${
+          className={`px-6 py-3 rounded-lg text-base font-semibold transition-all duration-200 border ${
             pathname === tab.path
-              ? 'bg-blue-600 text-white shadow-sm'
-              : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+              ? 'bg-blue-600 text-white shadow-lg border-blue-600 transform scale-105'
+              : 'text-gray-700 hover:text-blue-600 hover:bg-blue-50 border-gray-200 hover:border-blue-300 hover:shadow-md'
           }`}
         >
           {tab.name}

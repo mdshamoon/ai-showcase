@@ -35,7 +35,7 @@ export function SqlUpload({ onFileUpload, assistantId }: FileUploadProps) {
       
       <div
         {...getRootProps()}
-        className={`border-2 border-dashed rounded-xl p-12 text-center cursor-pointer transition-all duration-200 hover:shadow-lg
+        className={`border-2 border-dashed rounded-xl p-16 text-center cursor-pointer transition-all duration-200 hover:shadow-lg min-h-[400px] flex items-center justify-center
           ${isDragActive 
             ? 'border-blue-400 bg-blue-50 shadow-lg' 
             : 'border-gray-300 hover:border-blue-400 hover:bg-blue-50'
@@ -43,7 +43,7 @@ export function SqlUpload({ onFileUpload, assistantId }: FileUploadProps) {
       >
         <input {...getInputProps()} />
         
-        <div className="space-y-6">
+        <div className="space-y-6 w-full">
           <div className="mx-auto w-20 h-20 text-gray-400">
             <svg
               fill="none"
@@ -63,20 +63,20 @@ export function SqlUpload({ onFileUpload, assistantId }: FileUploadProps) {
           
           {isDragActive ? (
             <div>
-              <p className="text-xl text-blue-600 font-semibold mb-2">
+              <p className="text-2xl text-blue-600 font-semibold mb-3">
                 Drop your SQL file here...
               </p>
-              <p className="text-sm text-blue-500">Release to upload</p>
+              <p className="text-base text-blue-500">Release to upload</p>
             </div>
           ) : (
             <div>
-              <p className="text-xl text-gray-700 font-semibold mb-3">
+              <p className="text-2xl text-gray-700 font-semibold mb-4">
                 Drag and drop your SQL file here
               </p>
-              <p className="text-gray-500 mb-4">
+              <p className="text-lg text-gray-500 mb-6">
                 or click to browse and select a file
               </p>
-              <p className="text-sm text-gray-400">
+              <p className="text-base text-gray-400">
                 Supports .sql and .txt files up to 10MB
               </p>
             </div>
@@ -84,7 +84,7 @@ export function SqlUpload({ onFileUpload, assistantId }: FileUploadProps) {
           
           <button
             type="button"
-            className="inline-flex items-center px-8 py-4 border border-transparent text-lg font-semibold rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 transform hover:scale-105 shadow-md"
+            className="inline-flex items-center px-10 py-4 border border-transparent text-xl font-semibold rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-200 transform hover:scale-105 shadow-lg mt-8"
           >
             Select File
           </button>
@@ -92,18 +92,18 @@ export function SqlUpload({ onFileUpload, assistantId }: FileUploadProps) {
       </div>
 
       {acceptedFiles.length > 0 && (
-        <div className="mt-6 p-6 bg-green-50 border border-green-200 rounded-xl">
+        <div className="mt-8 p-6 bg-green-50 border border-green-200 rounded-xl">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <svg className="h-6 w-6 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+              <svg className="h-8 w-8 text-green-400" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
             </div>
             <div className="ml-4">
-              <p className="text-sm font-medium text-green-800">
-                Selected file: <span className="font-semibold">{acceptedFiles[0].name}</span>
+              <p className="text-base font-semibold text-green-800">
+                Selected file: <span className="font-bold">{acceptedFiles[0].name}</span>
               </p>
-              <p className="text-xs text-green-600 mt-1">
+              <p className="text-sm text-green-600 mt-1">
                 Size: {(acceptedFiles[0].size / 1024 / 1024).toFixed(2)} MB
               </p>
             </div>

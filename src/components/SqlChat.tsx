@@ -170,7 +170,7 @@ export function SqlChat({
                 value={schema}
                 onChange={(e) => setSchema(e.target.value)}
                 placeholder="Paste your database schema here..."
-                rows={8}
+                rows={16}
                 className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-vertical min-h-[200px]"
                 disabled={isCreating}
               />
