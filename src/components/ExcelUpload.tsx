@@ -28,11 +28,13 @@ export function ExcelUpload({ onFileUpload, assistantId }: FileUploadProps) {
 
   return (
     <div className="w-full">
-      <div className="mb-8 text-center">
-        <h2 className="text-2xl font-bold text-gray-900">Chat with Your Excel</h2>
-        <p className="mt-2 text-gray-600">
-          Drop your Excel file here to start chatting with AI about your data
-        </p>
+      <div className="mb-8">
+        <div className="text-center">
+          <h1 className="text-3xl font-semibold text-gray-900 mb-4">Chat with Your Excel</h1>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Drop your Excel file here to start chatting with AI about your data
+          </p>
+        </div>
       </div>      <div
         {...getRootProps()}
         className={`border-2 border-dashed rounded-xl p-12 text-center cursor-pointer transition-all duration-200 hover:shadow-lg

@@ -68,22 +68,20 @@ export default function SqlPage() {
   return (
     <>
       {/* SQL Assistant Content */}
-      <div className="flex justify-center">
-        <div className="w-full max-w-6xl">
+      <div className="flex justify-center px-4">
+        <div className="w-full max-w-5xl">
           {!assistant ? (
-            // Show full screen assistant creation when no assistant exists
             <div className="bg-white rounded-xl shadow-lg p-8">
               <SqlChat onAssistantCreated={handleAssistantCreated} />
             </div>
           ) : (
-            // Show side-by-side layout when assistant exists
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <SqlDisplay 
                 assistant={assistant}
                 onReset={handleResetAssistant}
               />
               <div className="bg-white rounded-xl shadow-lg p-8">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">Ask Your Question</h2>
+                <h2 className="text-3xl font-semibold text-gray-900 mb-6">Ask Your Question</h2>
                 <SqlChat 
                   onAssistantCreated={handleAssistantCreated}
                   existingAssistant={assistant}
