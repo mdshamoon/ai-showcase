@@ -1,39 +1,42 @@
 'use client';
 
 interface AssistantDisplayProps {
-  assistantId: string;
-  prompt: string;
+  assistant: any | null;
+  assistantId: string | null;
+  prompt: string | null;
   onReset: () => void;
+  handleAssistantCreated: (assistantId: string, prompt: string) => void;
+  handleFileUpload: (file: File) => void;
 }
 
-export function AssistantDisplay({ assistantId, prompt, onReset }: AssistantDisplayProps) {
+export function AssistantDisplay({ assistant, assistantId, prompt, onReset, handleAssistantCreated, handleFileUpload }: AssistantDisplayProps) {
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 h-full">
-      <div className="flex justify-between items-start mb-4">
-        <h2 className="text-xl font-semibold text-gray-900">Your AI Assistant</h2>
+    <div className="bg-white rounded-xl shadow-lg p-8 h-full">
+      <div className="flex justify-between items-start mb-6">
+        <h2 className="text-2xl font-bold text-gray-900">Your AI Assistant</h2>
         <button
           onClick={onReset}
-          className="text-sm text-gray-500 hover:text-gray-700 transition-colors"
+          className="px-4 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-100 rounded-lg transition-colors"
         >
           Create New Assistant
         </button>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-6">
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
             Assistant ID
           </label>
-          <div className="bg-gray-50 rounded-lg p-3 font-mono text-sm text-gray-800 break-all">
+          <div className="bg-gray-50 rounded-lg p-4 font-mono text-sm text-gray-800 break-all border border-gray-200">
             {assistantId}
           </div>
         </div>
 
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
             Instructions
           </label>
-          <div className="bg-gray-50 rounded-lg p-4 text-sm text-gray-800 max-h-96 overflow-y-auto">
+          <div className="bg-gray-50 rounded-lg p-4 text-sm text-gray-800 max-h-96 overflow-y-auto border border-gray-200">
             <pre className="whitespace-pre-wrap font-sans">{prompt}</pre>
           </div>
         </div>

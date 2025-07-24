@@ -10,7 +10,7 @@ const ASSISTANT_ID = process.env.OPENAI_ASSISTANT_ID;
 
 // Hardcoded prompt for Excel correction
 const CORRECTION_PROMPT = `
-Please analyze the uploaded Markdown file.
+Please analyze the uploaded sql text file.
 `;
 
 export async function POST(request: NextRequest) {
@@ -34,12 +34,12 @@ export async function POST(request: NextRequest) {
 
     // Validate file type
     const allowedTypes = [
-      'text/markdown'
+      'text/sql text'
     ];
     
     if (!allowedTypes.includes(file.type)) {
       return NextResponse.json(
-        { error: 'Invalid file type. Please upload a Markdown file (.md)' },
+        { error: 'Invalid file type. Please upload a sql text file (.md)' },
         { status: 400 }
       );
     }
