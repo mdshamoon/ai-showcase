@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { ExcelUpload } from '@/components/ExcelUpload';
+import { SqlUpload } from '@/components/SqlUpload';
 import { ProcessingStatus } from '@/components/ProcessingStatus';
 import { DownloadResult } from '@/components/DownloadResult';
 
@@ -17,7 +17,7 @@ interface Assistant {
   prompt: string;
 }
 
-export default function Home() {
+export default function SqlPage() {
   const [assistant, setAssistant] = useState<Assistant | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [result, setResult] = useState<ProcessingResult | null>(null);
@@ -33,7 +33,7 @@ export default function Home() {
       formData.append('file', file);
       formData.append('assistantId', assistant.id);
 
-      const response = await fetch('/api/process-excel', {
+      const response = await fetch('/api/process-sql', {
         method: 'POST',
         body: formData,
       });
@@ -66,11 +66,11 @@ export default function Home() {
 
   return (
     <>
-      {/* Excel Upload Content */}
+      {/* SQL Upload Content */}
       <div className="flex justify-center">
         <div className="w-full max-w-4xl">
           <div className="bg-white rounded-xl shadow-lg p-8">
-            <ExcelUpload onFileUpload={handleFileUpload} assistantId={assistant?.id || null} />
+            <SqlUpload onFileUpload={handleFileUpload} assistantId={assistant?.id || null} />
           </div>
         </div>
       </div>
@@ -89,4 +89,4 @@ export default function Home() {
       )}
     </>
   );
-}
+} 

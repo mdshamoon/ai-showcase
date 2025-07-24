@@ -1,6 +1,8 @@
 'use client';
 
 import { useState } from 'react';
+import { AssistantChat } from '@/components/AssistantChat';
+import { AssistantDisplay } from '@/components/AssistantDisplay';
 import { ExcelUpload } from '@/components/ExcelUpload';
 import { ProcessingStatus } from '@/components/ProcessingStatus';
 import { DownloadResult } from '@/components/DownloadResult';
@@ -17,10 +19,19 @@ interface Assistant {
   prompt: string;
 }
 
-export default function Home() {
+export default function AssistantPage() {
   const [assistant, setAssistant] = useState<Assistant | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
   const [result, setResult] = useState<ProcessingResult | null>(null);
+
+  const handleAssistantCreated = (assistantId: string, prompt: string) => {
+    setAssistant({ id: assistantId, prompt });
+  };
+
+  const handleResetAssistant = () => {
+    setAssistant(null);
+    setResult(null);
+  };
 
   const handleFileUpload = async (file: File) => {
     if (!assistant) return;
@@ -66,12 +77,35 @@ export default function Home() {
 
   return (
     <>
-      {/* Excel Upload Content */}
+      {/* Assistant Content */}
       <div className="flex justify-center">
         <div className="w-full max-w-4xl">
-          <div className="bg-white rounded-xl shadow-lg p-8">
-            <ExcelUpload onFileUpload={handleFileUpload} assistantId={assistant?.id || null} />
-          </div>
+          {!assistant ? (
+            // Show full screen assistant creation when no assistant exists
+            <div className="bg-white rounded-xl shadow-lg p-8">
+              {/* <div className="text-center mb-8">
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">Create Your AI Assistant</h2>
+                <p className="text-lg text-gray-600">Create an assistant to process your files</p>
+              </div> */}
+              <AssistantChat onAssistantCreated={handleAssistantCreated} />
+            </div>
+          ) : (
+            // Show side-by-side layout when assistant exists
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+              <AssistantDisplay 
+                assistant={assistant}
+                assistantId={assistant?.id || null} 
+                prompt={assistant?.prompt || null} 
+                onReset={handleResetAssistant}
+                handleAssistantCreated={handleAssistantCreated}
+                handleFileUpload={handleFileUpload}
+              />
+              <div className="bg-white rounded-xl shadow-lg p-8">
+                <h3 className="text-xl font-semibold text-gray-900 mb-6">Upload Excel File</h3>
+                <ExcelUpload onFileUpload={handleFileUpload} assistantId={assistant?.id || null} />
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -89,4 +123,4 @@ export default function Home() {
       )}
     </>
   );
-}
+} 
