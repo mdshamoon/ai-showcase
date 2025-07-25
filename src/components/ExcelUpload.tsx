@@ -31,7 +31,7 @@ export function ExcelUpload({ onFileUpload, showHeader = true }: FileUploadProps
       {showHeader && (
         <div className="mb-8">
           <div className="text-center">
-            <h1 className="text-4xl font-bold text-gray-900 mb-4">Chat with Your Excel</h1>
+            <h1 className="text-4xl font-bold text-gray-900 mb-4">Clean Your Data</h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-6">
               Upload your Excel file and let our AI assistant analyze, correct, and enhance your data automatically
             </p>

@@ -6,7 +6,7 @@ import { usePathname } from 'next/navigation';
 export function Navigation() {
   const pathname = usePathname();
   const tabs = [
-    { name: 'Chat with Excel', path: '/' },
+    { name: 'Clean Your Data', path: '/' },
     { name: 'Assistant', path: '/assistant' },
     { name: 'Generate SQL', path: '/sql' }
   ];
