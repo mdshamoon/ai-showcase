@@ -88,7 +88,7 @@ export function SqlChat({
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Example: Get all users who have made a purchase in the last month..."
             rows={4}
-            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-vertical"
+            className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-vertical text-black"
             disabled={isProcessing}
           />
         </div>
@@ -171,7 +171,7 @@ export function SqlChat({
                 onChange={(e) => setSchema(e.target.value)}
                 placeholder="Paste your database schema here..."
                 rows={16}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-vertical min-h-[200px]"
+                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-vertical min-h-[200px] text-black"
                 disabled={isCreating}
               />
               <p className="mt-2 text-sm text-gray-500">
